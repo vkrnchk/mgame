@@ -1,0 +1,6 @@
+--2026-02-22 20:35:18--  https://www.transfernow.net/d/start?utm_source=202602222YDQzuXa
+Resolving www.transfernow.net (www.transfernow.net)... 8.6.112.6, 8.47.69.6, 2a06:98c1:3122:8000::6, ...
+Connecting to www.transfernow.net (www.transfernow.net)|8.6.112.6|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2026-02-22 20:35:18 ERROR 403: Forbidden.
+

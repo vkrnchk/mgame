@@ -1,0 +1,87 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE (VS Code)
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Swap files (временные файлы редакторов)
+*.swp
+*.swo
+*~
+
+# Socket.io (на всякий случай)
+/socket.io/
+
+# Директории, которые могут быть
+/dist
+/build
+/coverage
+
+# Тесты
+/test
+/tests
+__tests__1~# Node.js - ЭТО САМОЕ ВАЖНОЕ!
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE (VS Code)
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Swap files (временные файлы редакторов)
+*.swp
+*.swo
+*~
+
+# Socket.io (на всякий случай)
+/socket.io/
+
+# Директории, которые могут быть
+/dist
+/build
+/coverage
+
+# Тесты
+/test
+/tests
+__tests__

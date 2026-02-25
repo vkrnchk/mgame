@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Math Battle — Математическая дуэль</title>
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <script>
+        // Автозаполнение из URL параметров
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomFromUrl = urlParams.get('room');
+            const nameFromUrl = urlParams.get('name');
+            
+            // Сохраняем в sessionStorage для использования после загрузки страницы
+            if (roomFromUrl) {
+                sessionStorage.setItem('autoJoinRoom', roomFromUrl);
+            }
+            if (nameFromUrl) {
+                sessionStorage.setItem('autoJoinName', decodeURIComponent(nameFromUrl));
+            }
+        })();
+    </script>
+
+    <div class="container">
+        <!-- ============ ЭКРАН 1: ЛОББИ / ВХОД ============ -->
+        <div id="lobbyScreen" class="screen active">
+            <div class="lobby-card">
+                <h1><i class="fas fa-bolt"></i> MATH BATTLE</h1>
+                <p class="subtitle">Соревнуйся в скорости счёта</p>
+                
+                <!-- ЕДИНОЕ поле для ввода имени -->
+                <div class="input-group">
+                    <input type="text" id="playerName" class="input-field" 
+                           placeholder="Введи имя.." maxlength="20" autocomplete="off">
+                </div>
+                
+                <!-- Кнопка создания комнаты -->
+                <button class="button primary" id="createRoomBtn">
+                    <i class="fas fa-rocket"></i> СОЗДАТЬ КОМНАТУ
+                </button>
+                
+                <!-- Информация о созданной комнате с QR-кодом -->
+                <div id="roomInfo" class="room-info hidden">
+                    <p><i class="fas fa-check-circle" style="color: var(--success);"></i> КОМНАТА СОЗДАНА</p>
+                    
+                    <!-- Контейнер для QR-кода -->
+                    <div id="qrcode" class="qrcode-container"></div>
+                    
+                    <div class="room-code" id="roomCode" style="font-size: 18px; padding: 10px; color: var(--success);">
+                        <i class="fas fa-copy"></i> Ссылка скопирована! Отправь её другу!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============ ЭКРАН 2: ИГРОВОЙ ПРОЦЕСС ============ -->
+        <div id="gameScreen" class="screen hidden">
+            <div class="timer-container">
+                <div class="timer" id="gameTimer">45</div>
+                <div class="timer-label">СЕКУНД</div>
+            </div>
+            
+            <!-- Математический пример -->
+            <div class="math-problem-container">
+                <div class="problem-label">РЕШИ ПРИМЕР</div>
+                <div class="math-problem" id="mathProblem"></div>
+            </div>
+            
+            <!-- Поле ввода ответа -->
+            <div class="answer-input-container">
+                <input type="number" id="answerInput" class="problem-input" 
+                       placeholder="Введи ответ..." autocomplete="off" inputmode="numeric" pattern="[0-9]*"
+                       maxlength="3">
+                <button class="submit-btn" id="submitAnswerBtn">
+                    <i class="fas fa-paper-plane"></i> ОТПРАВИТЬ
+                </button>
+                <div id="answerFeedback" class="feedback"></div>
+            </div>
+            
+            <!-- Скрытые элементы для хранения данных игроков -->
+            <div style="display: none;">
+                <div id="player1Name" data-player-id=""></div>
+                <div id="player2Name" data-player-id=""></div>
+                <div id="player1Score">0</div>
+                <div id="player2Score">0</div>
+            </div>
+        </div>
+        
+        <!-- ============ ЭКРАН 3: РЕЗУЛЬТАТЫ ============ -->
+        <div id="resultsScreen" class="screen hidden">
+            <div class="results-header">
+                <h1><i class="fas fa-trophy"></i> РЕЗУЛЬТАТЫ</h1>
+            </div>
+            
+            <div class="game-arena">
+                <div id="finalScoreboard" class="final-scoreboard"></div>
+                
+                <div class="rematch-actions">
+                    <button class="rematch-btn" id="rematchBtn">
+                        <i class="fas fa-redo-alt"></i> ИГРАТЬ СНОВА
+                    </button>
+                    <button class="button secondary" id="backToLobbyBtn">
+                        <i class="fas fa-home"></i> В ЛОББИ
+                    </button>
+                </div>
+                
+                <div id="rematchHint" class="rematch-hint hidden">
+                    <i class="fas fa-hand-point-up"></i> Соперник готов! Нажми "Играть снова"
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Уведомления -->
+    <div id="notification" class="notification hidden">
+        <span id="notificationText"></span>
+    </div>
+    
+    <!-- Подключение скриптов -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="/game.js"></script>
+</body>
+</html>
